@@ -1,4 +1,6 @@
 ﻿using Akka.Actor;
+using QuoteClient.Akka.BacklogManager;
+using QuoteClient.Akka.QuoteStream;
 using QuoteClient.Akka.UserInterface;
 using QuoteClient.Akka.UX;
 using QuoteShared;
@@ -14,20 +16,18 @@ namespace QuoteClient.Akka
     {
         static async Task Main(string[] args)
         {
-            using (var system = ActorSystem.Create("CarQuotes"))
+            using (var system = ActorSystem.Create("GoblinfactoryInsuranceQuotes"))
             {
                 Thread.Sleep(500);
+
                 IActorRef ux = UserInterfaceActor.Create(system);
+                IActorRef backLogManager = BacklogManagerActor.Create(system, ux);
+                IActorRef quoteStream = QuoteStreamActor.Create(system, backLogManager, ux, 100, 100, 1500,  QuoteGenerator.GenerateQuote);
+                
+                quoteStream.Tell(new Start());
 
-               var upstream = QuoteStreamSimulator.GetDemoQuoteStream(totalRfqs: 300, pause: 100, spread: 1000);
-
-                int i = 1;
-                await foreach (var quote in upstream)
-                {
-                    ux.Tell(new RfqReceived(quote));
-                    ux.Tell(new BacklogCountChanged(i++));
-                }
-
+                ux.Tell("press any key to quit.");
+                Console.ReadKey(false);
                 await system.Terminate();
             }
         }
@@ -55,14 +55,6 @@ namespace QuoteClient.Akka
     // -----------
     // responsible for scaling out requests for quotes to providers, so that the requests to a single provider can be asynchronous.
 
-    // QuoteManager
-    // ------------
-    // runs in two modes, OFFLINE and ONLINE 
-    // when OFFLINE, all new RFQ's must be queued, when ONLINE, should process all queued messages. Lets see if there is default berhavior for this?
-    // takes a rfq and a 'panel' of providers
-    // creates a 'child' QuoteFetcher actor for each provider, via a QuoteRouter
-    // decides what to do when a child actor fails
-
     // QuoteTracker
     // ------------
     // tracks all quotes that come in for a specific RFQ 
@@ -70,23 +62,11 @@ namespace QuoteClient.Akka
     // if all quotes are in or have failed and we don't have 10
     // tell the quote manager when the job is done, or has failed.
     // tell the quotetracker our % progress
-
-    // QuoteStreamManager
+       
+    // UserInterfaceActor
     // ------------------
-    // manage the stream of incoming quotes
-    // ensure all RFQ's get quotes
-    // track the overall state of the quotes
-    // update the UI to track the overall quotes progress
-    // track active quotes
-    // track total quotes
-    // total value of all quotes.
-
-    // QuoteUI
-    // -------
-    // simplest
-    // 3 columns, backlog, busy, quotes (top and bottom)
-    // quotes top - quote stream for all quotes
-    // quotes bottom - stream of finished quotes, with best quote.
-
-
+    // does UI stuff
+    
+    // TIME PERMITTING configure Akka to deploy the UI remotely.
+    
 }

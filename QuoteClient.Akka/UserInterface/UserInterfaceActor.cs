@@ -10,6 +10,16 @@ namespace QuoteClient.Akka.UserInterface
         {
             _ux = ux;
 
+            Receive<string>(message =>
+            {
+                _ux.Status.WriteLine(message);
+            });
+
+            Receive<SpreadChanged>(message =>
+            {
+                _ux.Status.Update(message);
+            });
+
             Receive<BacklogCountChanged>(message =>
             {
                 _ux.Status.Update(message);

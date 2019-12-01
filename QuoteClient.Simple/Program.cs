@@ -12,7 +12,7 @@ namespace QuoteClient.Simple
         {
             Console.WriteLine("Hello World!");
 
-            var rfqs = QuoteStreamSimulator.GetDemoQuoteStream(totalRfqs: 300, pause:100, spread:1500);
+            var rfqs = QuoteGenerator.GetDemoQuoteStream(totalRfqs: 300, pause:100, spread:1500);
 
             // start background add RFQ's to queue as they come in
             var stream = Task.Run(async () =>
