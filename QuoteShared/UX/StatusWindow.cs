@@ -1,7 +1,6 @@
 ﻿using Konsole;
+using QuoteClient.Akka.UserInterface;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QuoteShared.UX
 {
@@ -15,9 +14,9 @@ namespace QuoteShared.UX
             _console.PrintAt(0, 0, "Backlog: ");
         }
 
-        public void Refresh(IStatus status)
+        public void Update(BacklogCountChanged change)
         {
-            _console.PrintAtColor(ConsoleColor.Yellow, 9, 0, status.Backlog.ToString(), null);
+            _console.PrintAtColor(ConsoleColor.Yellow, 9, 0, change.NewValue.ToString(), null);
         }
     }
 }

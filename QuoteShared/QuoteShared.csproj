@@ -6,12 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="28.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Konsole">
-      <HintPath>..\..\konsole\Konsole\bin\Release\Konsole.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Goblinfactory.Konsole" Version="3.4.0" />
   </ItemGroup>
 
 </Project>

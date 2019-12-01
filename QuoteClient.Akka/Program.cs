@@ -1,9 +1,11 @@
-﻿using Konsole;
-using Konsole.Layouts;
+﻿using Akka.Actor;
+using QuoteClient.Akka.UserInterface;
+using QuoteClient.Akka.UX;
 using QuoteShared;
 using QuoteShared.UX;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace QuoteClient.Akka
@@ -12,16 +14,21 @@ namespace QuoteClient.Akka
     {
         static async Task Main(string[] args)
         {
-            var upstream = QuoteStreamSimulator.GetDemoQuoteStream(totalRfqs: 300, pause: 100, spread: 1000);
-
-            var ux = new UserInterface();
-            int i = 1;
-            await foreach (var quote in upstream)
+            using (var system = ActorSystem.Create("CarQuotes"))
             {
-                ux.Status.Refresh(new Status(i++, 0, 0, 0M, 0, 0));
-                
-                // print all the quotes as they come in onto the backlog so that they scroll into view
-                ux.Backlog.WriteLine(quote.ToString());
+                Thread.Sleep(500);
+                IActorRef ux = UserInterfaceActor.Create(system);
+
+               var upstream = QuoteStreamSimulator.GetDemoQuoteStream(totalRfqs: 300, pause: 100, spread: 1000);
+
+                int i = 1;
+                await foreach (var quote in upstream)
+                {
+                    ux.Tell(new RfqReceived(quote));
+                    ux.Tell(new BacklogCountChanged(i++));
+                }
+
+                await system.Terminate();
             }
         }
     }

@@ -6,21 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Goblinfactory.Konsole" Version="3.4.0" />
+    <PackageReference Include="Akka" Version="1.4.0-beta3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\QuoteShared\QuoteShared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Konsole">
-      <HintPath>..\..\konsole\Konsole\bin\Release\Konsole.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Actors\" />
   </ItemGroup>
 
 </Project>

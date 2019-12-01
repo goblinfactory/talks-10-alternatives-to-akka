@@ -53,17 +53,29 @@ The demo QuoteService is a self hosted .NET Core 3 app, in [QuoteService](/Quote
 This impacts the % likelihood that a request to any Insurance company in our panel will give us one of these problems;
 
 ```shell
-  - `429` with  `Retry-After` 
-  - 503 `Service Unavailable`, a retry should succeed.
-  - `404` should return 404 `Not found`, a retry should never succeed.
-  - `500` should return 500 `Internal server error`, possibly take the service down permanently. 
+  - 429 with  Retry-After 
+  - 503 Service Unavailable, a retry should succeed.
+  - 404 should return 404 `Not found`, a retry should never succeed.
+  - 500 should return 500 `Internal server error`, possibly take the service down permanently. 
 ```
 
 I have written a rudimentary [BackoffSimulator.cs](QuoteService/Controllers/BackoffSimulator) that will send 429's and take the service offline until a set time has past. (fingers crossed this gives us the behavior we want for the demo.)
 
 To save time I am using `Konsole`, to rapidly mock up a console user interface. (currently the UX library only works on windows because .NET console has not been fully ported to .NET standard yet, volunteers anyone?)
 
-this gives us the following UX for the demo
+```
+var w = new Window();
+var left = w.SplitLeft();
+var backlog = left.SplitTop('backlog');
+var current = left.SplitBottom('current');
+var quote = right.SplitTop('quote panel');
+var status = right.SplitBottom('status');
+...
+foreach(var rfq in rfqs) { backlog.WriteLine(rfq.ToString()); }
+....
+```
+
+... gives us the following type of scrolling windowed console UX for the test code
 
 <img src='docs/console-ux.PNG' width='600'/>
 
