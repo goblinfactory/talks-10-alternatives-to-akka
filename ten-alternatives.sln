@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuoteService", "QuoteServic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "things", "things", "{DFED3702-72F4-4FD7-B77E-3B32D929F5D2}"
 	ProjectSection(SolutionItems) = preProject
-		code-walkthru.md = code-walkthru.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuoteShared", "QuoteShared\QuoteShared.csproj", "{07AF28C9-414D-4829-9D9A-358BAD77CE36}"

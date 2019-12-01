@@ -15,5 +15,9 @@
         public string Driver { get; set; }
         public int Age { get; set; }
         public string RegNo { get; set; }
+        public override string ToString()
+        {
+            return $"{Driver,-20} {Age,-3} {RegNo,-8}";
+        }
     }
 }
