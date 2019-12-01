@@ -31,7 +31,7 @@ code walk through of **circuitbreaker with Akka.net** and (without akka) using *
 
 Availability of each of the demo services is either `Excellent`, `Good`, `Spotty` and `Bad`. The console app `QuotePanel` launches one self hosted webapi per entry in the panel file, at the configured port, with the configured `speed` and `availability`.
 
-The demo QuoteService is a self hosted .NET Core 3 app, in [QuoteService](src/QuoteService). The logic for the demo is in [Controllers/QuoteController.cs](src/QuoteService/Controllers/QuoteController.cs) and the chance of an api request throwing one of the errors defined above is defined as so
+The demo QuoteService is a self hosted .NET Core 3 app, in [QuoteService](/QuoteService). The logic for the demo is in [Controllers/QuoteController.cs](QuoteService/Controllers/QuoteController.cs) and the chance of an api request throwing one of the errors defined above is defined as so
 
 ```csharp
         private bool Should()
@@ -59,7 +59,7 @@ This impacts the % likelihood that a request to any Insurance company in our pan
   - `500` should return 500 `Internal server error`, possibly take the service down permanently. 
 ```
 
-I have written a rudimentary [BackoffSimulator.cs](src/QuoteService/Controllers/BackoffSimulator) that will send 429's and take the service offline until a set time has past. (fingers crossed this gives us the behavior we want for the demo.)
+I have written a rudimentary [BackoffSimulator.cs](QuoteService/Controllers/BackoffSimulator) that will send 429's and take the service offline until a set time has past. (fingers crossed this gives us the behavior we want for the demo.)
 
 To save time I am using `Konsole`, to rapidly mock up a console user interface. (currently the UX library only works on windows because .NET console has not been fully ported to .NET standard yet, volunteers anyone?)
 
