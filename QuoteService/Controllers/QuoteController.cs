@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using QuoteShared;
 using QuoteService.Internal;
 using QuoteService.Models;
 
@@ -33,16 +34,16 @@ namespace QuoteService.Controllers
 
 		[Route("car-insurance/quotes")]
 		[HttpPost]
-		public async Task<ActionResult<CarInsuranceRequest>> GetCarInsuranceQuote(CarInsuranceRequest info)
+		public async Task<ActionResult<RFQ>> GetCarInsuranceQuote(RFQ info)
 		{
 			// for this demo, we're only going to be processing approximately 30 quotes each per Insurer on the panel.
 			var chance = new Chance(_availability);
 
 			// check if we're being throttled
 			// ------------------------------
-			if(BackoffSimulator.IsCurrentlyLimiting<CarInsuranceRequest>(DateTime.Now))
+			if(BackoffSimulator.IsCurrentlyLimiting<RFQ>(DateTime.Now))
 			{
-				Response.Headers.Add("Retry-After", BackoffSimulator.HowLong<CarInsuranceRequest>().ToString());
+				Response.Headers.Add("Retry-After", BackoffSimulator.HowLong<RFQ>().ToString());
 				return StatusCode((int)HttpStatusCode.TooManyRequests);
 			}
 
@@ -51,7 +52,7 @@ namespace QuoteService.Controllers
 			if (chance.ShouldBackOff())
 			{
 				// poor mans rate limiter, simulate an upstream partner service, e.g. a panel member providing car quotes. (insurance company X)
-				BackoffSimulator.TakeServiceOfflineUntil<CarInsuranceRequest>(DateTime.Now.AddSeconds(20));
+				BackoffSimulator.TakeServiceOfflineUntil<RFQ>(DateTime.Now.AddSeconds(20));
 				Response.Headers.Add("Retry-After", "20");
 				return StatusCode((int)HttpStatusCode.TooManyRequests);
 			}

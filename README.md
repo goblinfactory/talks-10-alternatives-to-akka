@@ -16,16 +16,28 @@ very quickly demonstrate two approaches to handling common problems
 - building loosely coupled systems
 - easily scale
 - easy to understand and reason about
-- no concurrency problems.
+- no concurrency problems. (not sure this is true, we'll see.) Possibly ... no traditional database transaction locking concurrency issues, rather logical concurrency issues. 
 - yes, we inherit other problems. (so a big challenge is to make this comparison fair enough to surface any of the trade-offs with event/command sourcing.)
 
 ## the akka way
 
+- EMBRACE FAILURE!
 - delegated management (parent/child)
 - retry on error 
 - ignore error 500
 - circuit breaker, handle backoff on 429
 - loose coupling
+- concurrency is a higher level of abstraction. You can safely reason that a whole swathe of code and classes will never need to be concurrency tested (specifically for multiple threads accessing shared memory, this will never happen), or need to use ConcurrentQueue, ConcurrentDictionary etc, or use the CreateConcurrentInstance methods. (#citationNeeded)
+- systems that DO need to operate concurrently, betting, finance, massively multiplayer online gaming etc, ensure the integrity of shared data with much simpler code.
+
+## Akka issues
+
+- debugging is more difficult. 
+- for simplistic systems, akka.net unlikely to provide benefits.
+- data races are still possible. While actors are gauranteed to only have 1 instance live at a time, we can have millions of actors live at a time, all running 'concurrently'.
+- deadlocks are still possible! (sob)
+- systems that DONT need to operate concurrently, (Crud systems where each user is acting on their own data and are thus naturally self isolating [partitioned]) Akka.net adds needless complexity.
+
 
 ## alternatives in code
 
@@ -73,7 +85,11 @@ Need to come up with a service that typically would be slow and can be parelleli
 - Respect `Retry-After` (e.g. `429`) as described here : https://github.com/App-vNext/Polly/issues/414
 - have not tested. Notes appear to suggest not yet available in .NET core?
 
+## Random notes 
 
+- simulator should ideally simulate a server that can handle X requests per second, if requests come in faster than that the server should very quickly start responding longer and longer for each request and start giving errors.
+- most servers have a buffer for requests, and when that's full it's game over if the server is not smart enough to reply with 429.
+- need to be able to model the behaviours we're most likely going to encounter, which is a combination of the above, as well as smarter partners whos services will return 429's.
 
 ## The acceptance test
 

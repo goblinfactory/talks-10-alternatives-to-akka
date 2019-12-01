@@ -1,7 +1,6 @@
-using QuoteService.Internal;
 using System;
 
-namespace QuoteService.Models
+namespace QuoteShared
 {
 
     // todo swap out the configured serializer so that we can use immutable dto's
@@ -11,9 +10,9 @@ namespace QuoteService.Models
     {
         public Quote()
         {
-            Info = new CarInsuranceRequest();
+            Info = new RFQ();
         }
-        public Quote(Guid id, decimal amount, string underwriter, CarInsuranceRequest info)
+        public Quote(Guid id, decimal amount, string underwriter, RFQ info)
         {
             Id = id;
             Amount = amount;
@@ -25,10 +24,10 @@ namespace QuoteService.Models
 
         public Guid Id { get; set; }
         public decimal Amount { get; set; }
-        public CarInsuranceRequest Info { get; set; }
+        public RFQ Info { get; set; }
         public override string ToString()
         {
-            return $"{Info.Driver,-20} {Info.Car,-10} {Amount.ToCurrency()} {Underwriter,-15}";
+           return $"{Info.Driver,-20} {Info.RegNo,-10} {Amount.ToCurrency()} {Underwriter,-15}";
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace QuoteService.Internal
+namespace QuoteShared
 {
     public static class CurrencyExtensions
     {

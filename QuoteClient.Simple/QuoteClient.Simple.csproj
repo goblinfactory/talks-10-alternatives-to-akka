@@ -5,4 +5,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QuoteService\QuoteService.csproj" />
+    <ProjectReference Include="..\QuoteShared\QuoteShared.csproj" />
+  </ItemGroup>
+
 </Project>

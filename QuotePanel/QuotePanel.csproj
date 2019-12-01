@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuoteService\QuoteService.csproj" />
+    <ProjectReference Include="..\QuoteShared\QuoteShared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
