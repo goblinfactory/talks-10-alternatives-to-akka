@@ -1,6 +1,6 @@
 # objectives
 
-code walk through of **circuitbreaker with Akka.net** and (without akka) using **Polly**
+code walk through of **circuitbreaker and actor supervision with Akka.net** and (without akka) using **Polly**
 
 ## time permitting show a few of these in code
 
