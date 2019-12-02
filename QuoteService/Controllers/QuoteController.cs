@@ -5,21 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuoteShared;
 using QuoteService.Internal;
-using QuoteService.Models;
 
 namespace QuoteService.Controllers
 {
-	[Route("api")]
+    [Route("api")]
 	[ApiController]
 	public class QuoteController : ControllerBase
 	{
 		private static Random _rnd = new Random();
 		private static Dictionary<Guid, Quote> _quotes = new Dictionary<Guid, Quote>();
 		private static readonly int _speed = 1000;
-		private readonly IQuoterConfig _quoterConfig;
+		private readonly IInsuranceProvider _quoterConfig;
 		private Availability _availability;
 
-		public QuoteController(IQuoterConfig quoteConfig)
+		public QuoteController(IInsuranceProvider quoteConfig)
 		{
 			_quoterConfig = quoteConfig;
 			_availability = Enum.Parse<Availability>(quoteConfig.Availability);

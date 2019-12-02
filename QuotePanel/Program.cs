@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using QuoteService.Models;
+using QuoteShared;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ namespace QuotePanel
     {
         static void Main(string[] args)
         {
-            var panel = JsonConvert.DeserializeObject<QuoterConfig[]>(File.ReadAllText("panel.json"));
+            var panel = JsonConvert.DeserializeObject<InsuranceProvider[]>(File.ReadAllText("panel.json"));
 
             var servers = new List<Task>();
             foreach(var quoter in panel)

@@ -1,6 +1,6 @@
 ﻿using QuoteShared;
 
-namespace QuoteClient.Akka
+namespace QuoteClient.Akka.Messages
 {
     public class RfqReceived
     {

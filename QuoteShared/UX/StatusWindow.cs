@@ -1,5 +1,4 @@
 ﻿using Konsole;
-using QuoteClient.Akka.UserInterface;
 using System;
 
 namespace QuoteShared.UX
@@ -27,7 +26,7 @@ namespace QuoteShared.UX
 
         public void WriteLine(string message)
         {
-            _console.WriteLine(message);
+            _console.WriteLine(ConsoleColor.DarkGray, message);
         }
 
     }

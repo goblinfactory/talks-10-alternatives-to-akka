@@ -1,37 +1,34 @@
 ﻿using Akka.Actor;
-using Newtonsoft.Json;
 using QuoteClient.Akka.Commands;
-using QuoteClient.Akka.Messages;
 using QuoteShared;
 using QuoteShared.UX;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace QuoteClient.Akka
 {
-    class Program
+    public static class Startup
     {
-        static Barrier Finished = new Barrier(2);
-        static async Task Main(string[] args)
+        /// <summary>
+        /// Configure all the actors and dependancies, returns an IActorRef for the ProgramActor actor
+        /// </summary>
+        public static IActorRef ConfigureServices(ActorSystem system, InsuranceProvider[] providers,  Barrier barrier)
         {
-            using (var system = ActorSystem.Create("GoblinfactoryInsuranceQuotes"))
-            {
-                Thread.Sleep(500);
-               
-                var providers = JsonConvert.DeserializeObject<InsuranceProvider[]>(File.ReadAllText("panel.json"));
-                var program = Startup.ConfigureServices(system, providers, Finished);
-                var run = new RunProgram(providers);
-                program.Tell(run);
+            
+            IActorRef backLogManager = BacklogManager.Create(system);
+            IActorRef quoteStream = QuoteStream.Create(system, backLogManager, 100, 100, 1500, QuoteGenerator.GenerateQuote);
+            var userInterface = new UserInterface();
+            IActorRef ux = UIManager.Create(system, quoteStream, userInterface, barrier);
+            IActorRef monitor = UpstreamMonitor.Create(system, quoteStream, userInterface.Panel, providers);
 
-                Finished.SignalAndWait();
-                await system.WhenTerminated;
-            }
+            // trick to allow bidirectional dependancies
+            var uxReady = new UserInterfaceReady(ux);
+            backLogManager.Tell(uxReady);
+            quoteStream.Tell(uxReady);
+            
+            IActorRef program = ProgramActor.Create(system, ux, monitor);
+            return program;
         }
-
     }
-
 
 
     // BacklogManager

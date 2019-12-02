@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using QuoteService.Models;
+using QuoteShared;
 using System.Collections.Generic;
 
 namespace QuoteService
@@ -10,14 +10,14 @@ namespace QuoteService
     {
         public static void Main(string[] args)
         {
-            Run(args, new QuoterConfig("test-company", 100, 5100, Availability.Excellent.ToString()));
+            Run(args, new InsuranceProvider("test-company", 100, 5100, Availability.Excellent.ToString()));
         }
 
 
-        public static void Run(string[] args, QuoterConfig settings)
+        public static void Run(string[] args, InsuranceProvider settings)
         {
             new ServiceCollection()
-                .AddSingleton<IQuoterConfig>(settings)
+                .AddSingleton<IInsuranceProvider>(settings)
                 .BuildServiceProvider();
 
             CreateHostBuilder(args, settings.Port, settings)
@@ -25,11 +25,11 @@ namespace QuoteService
                 .Run();
         }
 
-        private static IHostBuilder CreateHostBuilder(string[] args, int port, QuoterConfig settings) =>
+        private static IHostBuilder CreateHostBuilder(string[] args, int port, InsuranceProvider settings) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices(sc =>
                 {
-                    sc.AddSingleton<IQuoterConfig>(settings);
+                    sc.AddSingleton<IInsuranceProvider>(settings);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

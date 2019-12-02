@@ -1,8 +1,8 @@
-﻿namespace QuoteService.Models
+﻿namespace QuoteShared
 {
-    public class QuoterConfig : IQuoterConfig
+    public class InsuranceProvider : IInsuranceProvider
     {
-        public QuoterConfig(string name, int speed, int port, string availability)
+        public InsuranceProvider(string name, int speed, int port, string availability)
         {
             Name = name;
             Speed = speed;

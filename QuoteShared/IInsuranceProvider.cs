@@ -1,6 +1,6 @@
-﻿namespace QuoteService.Models
+﻿namespace QuoteShared
 {
-    public interface IQuoterConfig
+    public interface IInsuranceProvider
     {
         string Name { get; }
 

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace QuoteShared
+namespace QuoteShared.UX
 {
     public class UserInterface
     {
@@ -20,6 +20,8 @@ namespace QuoteShared
 
         public StatusWindow Status { get; private set; }
 
+        public IConsole Panel { get; private set; }
+
         public UserInterface(IConsole console = null)
         {
             Console.CursorVisible = false;
@@ -28,7 +30,7 @@ namespace QuoteShared
             var _right = _parent.SplitRight();
             Backlog = _left.SplitTop("backlog");
             var _current = _left.SplitBottom("current");
-            var _panel = _right.SplitTop("quote panel");
+            Panel = _right.SplitTop("quote panel");
             var status = _right.SplitBottom("status");
             Status = new StatusWindow(status);
             Console.CursorVisible = false;

@@ -1,0 +1,126 @@
+﻿  [
+    {
+      "Name": "Cruise Insurance",
+      "Speed": 1000,
+      "Port": 5100,
+      "Availability" :  "Excellent"
+    },
+
+    {
+      "Name": "Hanks Inc",
+      "Speed": 100,
+      "Port": 5101,
+      "Availability": "Excellent"
+    },
+
+    {
+      "Name": "DiCapri Group",
+      "Speed": 100,
+      "Port": 5102,
+      "Availability": "Good"
+    },
+
+    {
+      "Name": "Downey Jr Investments",
+      "Speed": 100,
+      "Port": 5103,
+      "Availability": "Good"
+    },
+
+    {
+      "Name": "DiCapri Group",
+      "Speed": 500,
+      "Port": 5104,
+      "Availability": "Average"
+    },
+    {
+      "Name": "Pacino and Associates",
+      "Speed": 600,
+      "Port": 5105,
+      "Availability": "Average"
+    },
+    {
+      "Name": "DiCapri Group",
+      "Speed": 700,
+      "Port": 5106,
+      "Availability": "Average"
+    },
+    {
+      "Name": "Damon and Damon",
+      "Speed": 100,
+      "Port": 5107,
+      "Availability": "Good"
+    },
+    {
+      "Name": "The Cooper Club",
+      "Speed": 200,
+      "Port": 5108,
+      "Availability": "Good"
+    },
+    {
+      "Name": "Affleck Insights",
+      "Speed": 300,
+      "Port": 5109,
+      "Availability": "Average"
+    },
+    {
+      "Name": "Spielberb Investments",
+      "Speed": 500,
+      "Port": 5110,
+      "Availability": "Average"
+    },
+    {
+      "Name": "Caine Limited",
+      "Speed": 1000,
+      "Port": 5111,
+      "Availability": "Average"
+    },
+    {
+      "Name": "Hopkins Group",
+      "Speed": 2000,
+      "Port": 5112,
+      "Availability": "Spotty"
+    },
+    {
+      "Name": "Hoffman Investments",
+      "Speed": 500,
+      "Port": 5113,
+      "Availability": "Spotty"
+    },
+    {
+      "Name": "Neeson Management",
+      "Speed": 200,
+      "Port": 5114,
+      "Availability": "Spotty"
+    },
+    {
+      "Name": "Bale futures",
+      "Speed": 500,
+      "Port": 5115,
+      "Availability": "Spotty"
+    },
+    {
+      "Name": "Wahlberg Group",
+      "Speed": 200,
+      "Port": 5116,
+      "Availability": "Bad"
+    },
+    {
+      "Name": "Hitchcock Investments",
+      "Speed": 700,
+      "Port": 5117,
+      "Availability": "Bad"
+    },
+    {
+      "Name": "Stone Insurers",
+      "Speed": 100,
+      "Port": 5118,
+      "Availability": "Bad"
+    },
+    {
+      "Name": "Crowe Consultants",
+      "Speed": 2000,
+      "Port": 5119,
+      "Availability": "Bad"
+    }
+  ]

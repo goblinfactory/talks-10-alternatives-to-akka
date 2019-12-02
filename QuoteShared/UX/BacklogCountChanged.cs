@@ -1,4 +1,4 @@
-﻿namespace QuoteClient.Akka.UserInterface
+﻿namespace QuoteShared.UX
 {
     public class BacklogCountChanged
     {
