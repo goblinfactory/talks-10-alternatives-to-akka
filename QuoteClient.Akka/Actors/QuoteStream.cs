@@ -14,7 +14,7 @@ namespace QuoteClient.Akka.Commands
         private readonly int _totalRFQs;
         private readonly int _pauseBetweenSends;
         
-        private readonly IActorRef _quoteManager;
+        private readonly IActorRef _backlogManager;
         private readonly Func<RFQ> _generateRFQ;
         private IActorRef _userInterface;
         private int _count = 0;
@@ -27,7 +27,7 @@ namespace QuoteClient.Akka.Commands
             _pauseBetweenSends = pauseBetweenSends;
             _spread = spread;
             _spreadStart = spread;
-            _quoteManager = quoteManager;
+            _backlogManager = quoteManager;
             _generateRFQ = generateTestData;
 
             Receive<UserInterfaceReady>(message =>
@@ -35,10 +35,11 @@ namespace QuoteClient.Akka.Commands
                 _userInterface = message.UX;
             });
 
-            Receive<UpstreamONLINE>(message => {
+            Receive<StartStreamingTestData>(message => {
                 Become(Streaming);
                 Self.Tell(new SendRfq());
             });
+
 
             Receive<UpstreamOFFLINE>(message => Become(Paused));
         }
@@ -50,6 +51,13 @@ namespace QuoteClient.Akka.Commands
                 _userInterface.Tell("paused quote stream.");
             });
 
+            Receive<RFQ>(message => {
+                _backlogManager.Tell(message);
+                // keep it going!
+                Self.Tell(new SendRfq());
+            });
+
+            // mmm, this creates and destroys a new task per message, that's super inneficient, need to review best practice.
             Receive<SendRfq>(message => {
                 if ((_count++) >= _totalRFQs) {
                     Become(Paused);
@@ -66,8 +74,8 @@ namespace QuoteClient.Akka.Commands
                         _spread = _spreadStart;
                     }
                     Task.Delay(delay).Wait();
-                    _quoteManager.Tell(_generateRFQ());
-                    return new SendRfq();
+                    var RFQ = _generateRFQ();
+                    return RFQ;
                 }).PipeTo(Self);
             });
         }

@@ -7,15 +7,6 @@ using System.Collections.Generic;
 
 namespace QuoteClient.Akka.Commands
 {
-    // BacklogManager
-    // ------------
-    // wait for the green light from the upstream monitor
-    // manage the stream of incoming quotes (the backlog)
-    // ensures all RFQ's get a quote Tracker to get quotes
-    // as quotes come in, removes them from the backlog
-    // track total quotes
-    // total value of all quotes.
-
     public class BacklogManager : ReceiveActor
     {
         private IActorRef _userinterface;

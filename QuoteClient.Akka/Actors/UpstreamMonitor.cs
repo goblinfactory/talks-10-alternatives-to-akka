@@ -40,7 +40,7 @@ namespace QuoteClient.Akka
                     Thread.Sleep(50);
                 }
                 _console.WriteLine("telling quotestream to start");
-                _quoteStream.Tell(new UpstreamONLINE());
+                _quoteStream.Tell(new StartStreamingTestData());
             });
         }
 
