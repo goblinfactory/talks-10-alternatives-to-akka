@@ -55,6 +55,11 @@ namespace QuoteClient.Akka.Commands
                 HandleTheKeys();
             });
 
+            Receive<Char>(key =>
+            {
+                switch key: 
+                case 'q' : 
+            });
         }
 
         private void HandleTheKeys()
@@ -63,18 +68,15 @@ namespace QuoteClient.Akka.Commands
             var task = Task.Run<char>(() =>
             {
                 char key = 'a';
-                while (!new[] { 'q', 'p' }.Contains(key))
+                while (true)
                 {
                     key = Console.ReadKey(true).KeyChar;
-                    switch (key)
+                    if (key == 'q')
                     {
-                        case 'q':
-                            return 'q';
-                        case 'p':
-                            return 'p';
+                        return QuitPressed();
                     }
+
                 }
-                return 'q';
             });
             task.PipeTo(Self);
         }

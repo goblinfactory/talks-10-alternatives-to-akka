@@ -79,3 +79,29 @@ foreach(var rfq in rfqs) { backlog.WriteLine(rfq.ToString()); }
 
 <img src='docs/console-ux.PNG' width='600'/>
 
+This is the architecture for the actors used in the demo so far. I will try to keep this updated as I work on the project.
+
+<img src='docs/actor-architecture-messages.PNG' width='800'/>
+
+
+
+## Support, Feedback, Suggestions
+
+Please drop me a tweet if you find this demo useful. 
+
+keep chillin!
+
+    O__
+    _/`.\
+        `=( 
+
+Alan
+
+[p.s. join us at snowcode 2019! ](http://www.snowcode.com?refer=usergroup) <br/>
+[www.snowcode.com](http://www.snowcode.com?refer=konsole) <br/>
+(free dev conf at great ski resort)<br/>
+developers + party + snow + great learning
+
+[@snowcode](https://twitter.com/snowcode)
+
+![Alan Hemmings](https://pbs.twimg.com/profile_images/624901555532095488/j5dynw0i_bigger.png)
