@@ -1,10 +1,7 @@
 ﻿using Akka.Actor;
 using Newtonsoft.Json;
 using QuoteClient.Akka.Commands;
-using QuoteClient.Akka.Messages;
 using QuoteShared;
-using QuoteShared.UX;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;

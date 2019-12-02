@@ -52,17 +52,23 @@ namespace QuoteClient.Akka.Commands
 
             Receive<HandleKeys>(message =>
             {
-                HandleTheKeys();
+                BlockUntilAnyKey();
             });
 
             Receive<Char>(key =>
             {
-                switch key: 
-                case 'q' : 
+                switch (key) {
+                    case 'q':
+                        Self.Tell(new QuitPressed());
+                        break;
+                    case 'p':
+                        Self.Tell(new ToggleQuoteStreamPressed());
+                        break;
+                }
             });
         }
 
-        private void HandleTheKeys()
+        private void BlockUntilAnyKey(params char[] keys)
         {
             // this blocks a thread so we have to use a background task and PipeTo(Self)
             var task = Task.Run<char>(() =>
@@ -70,12 +76,11 @@ namespace QuoteClient.Akka.Commands
                 char key = 'a';
                 while (true)
                 {
-                    key = Console.ReadKey(true).KeyChar;
-                    if (key == 'q')
+                    while(!Console.KeyAvailable)
                     {
-                        return QuitPressed();
+                        key = Console.ReadKey(true).KeyChar;
+                        if (keys.Contains(key)) return key;
                     }
-
                 }
             });
             task.PipeTo(Self);
