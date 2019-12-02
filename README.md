@@ -87,7 +87,7 @@ This is the architecture for the actors used in the demo so far. I will try to k
 
 ## Support, Feedback, Suggestions
 
-Please drop me a tweet if you find this demo useful. 
+Please drop me a tweet if you find this demo code useful as a framework for your own experiments and learning.
 
 keep chillin!
 
