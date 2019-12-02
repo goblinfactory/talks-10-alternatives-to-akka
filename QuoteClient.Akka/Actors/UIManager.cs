@@ -39,6 +39,13 @@ namespace QuoteClient.Akka.Commands
                 _exitBarrier.SignalAndWait();
             });
 
+            Receive<ToggleQuoteStreamPressed>(message =>
+            {
+                _ux.Status.WriteLine("toggle quotestream");
+                _quoteStream.Tell(new ToggleQuoteStream());
+                Self.Tell(new HandleKeys());
+            });
+
             Receive<BacklogCountChanged>(message =>
             {
                 _ux.Status.Update(message);
@@ -52,7 +59,7 @@ namespace QuoteClient.Akka.Commands
 
             Receive<HandleKeys>(message =>
             {
-                BlockUntilAnyKey();
+                BlockUntilAnyKey('q', 'p');
             });
 
             Receive<Char>(key =>
@@ -88,10 +95,10 @@ namespace QuoteClient.Akka.Commands
 
         public static IActorRef Create(ActorSystem system, IActorRef quoteStream, UserInterface userInterface, Barrier barrier)
         {
-            if(barrier.ParticipantCount!=2 && barrier.ParticipantsRemaining!=2)
-            {
-                throw new ArgumentException("Barrier must be setup with 2 participants in order to use that as a means of blocking until user presses 'q'.");
-            }
+            //if(barrier.ParticipantCount!=2 && barrier.ParticipantsRemaining!=2)
+            //{
+            //    throw new ArgumentException("Barrier must be setup with 2 participants in order to use that as a means of blocking until user presses 'q'.");
+            //}
             var actor = system.ActorOf(Props.Create(() => new UIManager(userInterface, quoteStream, barrier)), NAME);
             return actor;
         }

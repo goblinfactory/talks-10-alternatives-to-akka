@@ -35,9 +35,9 @@ namespace QuoteClient.Akka
                     // todo, use Konsole to printAt the live (polled) status of each service
                     // use an actor for each, taking the row position (scrollable)
                     _console.Write($"{panel.Name,-30}");
-                    Thread.Sleep(200);
+                    Thread.Sleep(50);
                     _console.WriteLine(ConsoleColor.Green, "(200)");
-                    Thread.Sleep(200);
+                    Thread.Sleep(50);
                 }
                 _console.WriteLine("telling quotestream to start");
                 _quoteStream.Tell(new UpstreamONLINE());
